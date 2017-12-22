@@ -12,8 +12,26 @@ class Concentration {
     
     var cards = [Card]()
     
-    var indexOfOneAndOnlyFaceUpCard: Int?//当只有一个卡片朝上时，这个卡片的index
-    
+    var indexOfOneAndOnlyFaceUpCard: Int?{//当只有一个卡片朝上时，这个卡片的index
+        get {
+            var foundIndex: Int?
+            for index in cards.indices {
+                if cards[index].isFaceUp {
+                    if foundIndex == nil {
+                        foundIndex = index
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set {
+            for index in cards.indices {
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
     func chooseCard(at index: Int) {
         
         if !cards[index].isMatched {
@@ -25,15 +43,14 @@ class Concentration {
                     cards[index].isMatched = true
                 }
                 cards[index].isFaceUp = true
-                indexOfOneAndOnlyFaceUpCard = nil
+//                indexOfOneAndOnlyFaceUpCard = nil
             }else {//没有卡朝上或者两张卡朝上
                 
-                for flipDownIndex in cards.indices {
-                    
-                    cards[flipDownIndex].isFaceUp = false
-                    
-                }
-                cards[index].isFaceUp = true
+//                for flipDownIndex in cards.indices {
+//                    cards[flipDownIndex].isFaceUp = false
+//                }
+//                cards[index].isFaceUp = true
+                
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
