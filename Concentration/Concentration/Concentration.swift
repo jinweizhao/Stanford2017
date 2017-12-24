@@ -10,9 +10,9 @@ import Foundation
 
 class Concentration {
     
-    var cards = [Card]()
+    private(set) var cards = [Card]()
     
-    var indexOfOneAndOnlyFaceUpCard: Int?{//当只有一个卡片朝上时，这个卡片的index
+    private var indexOfOneAndOnlyFaceUpCard: Int?{//当只有一个卡片朝上时，这个卡片的index
         get {
             var foundIndex: Int?
             for index in cards.indices {
@@ -33,7 +33,7 @@ class Concentration {
         }
     }
     func chooseCard(at index: Int) {
-        
+        assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index)) chosen index not in the cards")
         if !cards[index].isMatched {
             
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
@@ -57,7 +57,7 @@ class Concentration {
     }
     
     init(numberOfPairsOfCards: Int) {
-        
+        assert(numberOfPairsOfCards > 0, "Concentration.init(numberOfPairsOfCards: \(numberOfPairsOfCards)) you must have at least one pair of Card")
         for _ in 1...numberOfPairsOfCards {
             
             let card = Card()
